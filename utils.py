@@ -1,5 +1,6 @@
 import numpy as np
 from configure import FLAGS
+import logging
 
 # class2label = {'Other': 0,
 #                'Message-Topic(e1,e2)': 1, 'Message-Topic(e2,e1)': 2,
@@ -60,3 +61,17 @@ def load_word2vec(embedding_path, embedding_dim, vocab):
             else:
                 f.read(binary_len)
     return initW
+
+def get_logger(log_file):
+    logger = logging.getLogger(log_file)
+    logger.setLevel(logging.DEBUG)
+    fh = logging.FileHandler(log_file)
+    fh.setLevel(logging.DEBUG)
+    ch = logging.StreamHandler()
+    ch.setLevel(logging.INFO)
+    formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
+    ch.setFormatter(formatter)
+    fh.setFormatter(formatter)
+    logger.addHandler(ch)
+    logger.addHandler(fh)
+    return logger

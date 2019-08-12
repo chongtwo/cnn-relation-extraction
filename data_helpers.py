@@ -5,7 +5,7 @@ import re
 
 import utils
 from configure import FLAGS
-
+from utils import get_logger
 
 def clean_str(text):
     text = text.lower()
@@ -90,14 +90,17 @@ def load_data_and_labels(path):
     utils.load_relation()
     df['label'] = [utils.class2label[r] for r in df['relation']]
 
+    # Text Id
+    x_id = df['id'].tolist()
+
     # Text Data
     x_text = df['sentence'].tolist()
 
     # Label Data
     y = df['label']
     labels_flat = y.values.ravel()
-    labels_count = np.unique(labels_flat).shape[0]
-
+    # labels_count = np.unique(labels_flat).shape[0]
+    labels_count = 6;
     # convert class labels from scalars to one-hot vectors
     # 0  => [1 0 0 0 0 ... 0 0 0 0 0]
     # 1  => [0 1 0 0 0 ... 0 0 0 0 0]
@@ -113,7 +116,7 @@ def load_data_and_labels(path):
     labels = dense_to_one_hot(labels_flat, labels_count)
     labels = labels.astype(np.uint8)
 
-    return x_text, labels, pos1, pos2
+    return x_text, labels, pos1, pos2, x_id
 
 
 def get_relative_position(df, max_sentence_length):

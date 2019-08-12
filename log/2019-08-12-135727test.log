@@ -1,0 +1,15 @@
+2019-08-12 13:57:33,471 - log\2019-08-12-135727test.log - INFO - checkpoint dir:runs/1565578114/checkpoints	
+2019-08-12 13:57:33,471 - log\2019-08-12-135727test.log - INFO - checkpoint file:D:\MyNLP\cnn-relation-extraction\runs\1565578114\checkpoints\model-0.212-39500	
+2019-08-12 13:57:39,908 - log\2019-08-12-135727test.log - INFO -               cprecision    recall  f1-score   support
+
+          NA       0.98      0.99      0.98      2211
+          At       0.94      0.91      0.93       211
+    Specifiy       0.00      0.00      0.00         0
+      SizeOf       0.97      0.91      0.94        86
+     Related       0.84      0.81      0.83       105
+      Negate       0.95      1.00      0.97        76
+
+   micro avg       0.97      0.97      0.97      2689
+   macro avg       0.78      0.77      0.78      2689
+weighted avg       0.97      0.97      0.97      2689
+
