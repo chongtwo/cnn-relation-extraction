@@ -9,20 +9,27 @@ def parse_args():
     parser = argparse.ArgumentParser()
 
     # Data loading params
-    parser.add_argument("--train_path", default="SemEval2010_task8_all_data/SemEval2010_task8_training/TRAIN_FILE.TXT",
+    # parser.add_argument("--train_path", default="SemEval2010_task8_all_data/SemEval2010_task8_training/TRAIN_FILE.TXT",
+    #                     type=str, help="Path of train data")
+    # parser.add_argument("--test_path", default="SemEval2010_task8_all_data/SemEval2010_task8_testing_keys/TEST_FILE_FULL.TXT",
+    #                     type=str, help="Path of test data")
+    parser.add_argument("--train_path", default="myData/train.txt",
                         type=str, help="Path of train data")
-    parser.add_argument("--test_path", default="SemEval2010_task8_all_data/SemEval2010_task8_testing_keys/TEST_FILE_FULL.TXT",
+    parser.add_argument("--test_path",
+                        default="myData/test.txt",
                         type=str, help="Path of test data")
-    parser.add_argument("--max_sentence_length", default=90,
+    parser.add_argument("--max_sentence_length", default=202,
                         type=int, help="Max sentence length in data")
     parser.add_argument("--dev_sample_percentage", default=0.1,
                         type=float, help="Percentage of the training data to use for validation")
+    parser.add_argument("--relation_file", default="myData/relation2id.txt",
+                        type=str, help="Path of relation file")
 
     # Model Hyper-parameters
     # Embeddings
     parser.add_argument("--embedding_path", default=None,
                         type=str, help="Path of pre-trained word embeddings (word2vec)")
-    parser.add_argument("--text_embedding_dim", default=300,
+    parser.add_argument("--text_embedding_dim", default=100,
                         type=int, help="Dimensionality of word embedding (default: 300)")
     parser.add_argument("--pos_embedding_dim", default=50,
                         type=int, help="Dimensionality of relative position embedding (default: 50)")
