@@ -2,3 +2,4 @@ resource/
 runs/
 **/.idea/
 **/__pycache__/
+myData/
