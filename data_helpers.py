@@ -48,26 +48,36 @@ def clean_str(text):
 
 def load_data_and_labels(path):
     data = []
-    lines = [line.strip() for line in open(path)]
+    lines = [line.strip() for line in open(path, encoding="utf8")]
     max_sentence_length = 0
-    for idx in range(0, len(lines), 4):
+    # for idx in range(0, len(lines), 4):
+    for idx in range(0, len(lines), 2):
         id = lines[idx].split("\t")[0]
         relation = lines[idx + 1]
 
-        sentence = lines[idx].split("\t")[1][1:-1]
-        sentence = sentence.replace('<e1>', ' _e11_ ')
-        sentence = sentence.replace('</e1>', ' _e12_ ')
-        sentence = sentence.replace('<e2>', ' _e21_ ')
-        sentence = sentence.replace('</e2>', ' _e22_ ')
-
-        sentence = clean_str(sentence)
-        tokens = nltk.word_tokenize(sentence)
-        if max_sentence_length < len(tokens):
-            max_sentence_length = len(tokens)
-        e1 = tokens.index("e12") - 1
-        e2 = tokens.index("e22") - 1
-        sentence = " ".join(tokens)
-
+        # sentence = lines[idx].split("\t")[1][1:-1]
+        sentence = lines[idx].split("\t")[1]
+        # sentence = sentence.replace('<e1>', ' _e11_ ')
+        # sentence = sentence.replace('</e1>', ' _e12_ ')
+        # sentence = sentence.replace('<e2>', ' _e21_ ')
+        # sentence = sentence.replace('</e2>', ' _e22_ ')
+        #
+        # sentence = clean_str(sentence)
+        # tokens = nltk.word_tokenize(sentence)
+        # if max_sentence_length < len(tokens):
+        #     max_sentence_length = len(tokens)
+        # e1 = tokens.index("e12") - 1
+        # e2 = tokens.index("e22") - 1
+        # sentence = " ".join(tokens)
+        if max_sentence_length < len(sentence):
+            max_sentence_length = len(sentence)
+        sentence = " ".join(sentence[i] for i in range(len(sentence)))
+        sentence = sentence.replace('< e 1 >', 'e11')
+        sentence = sentence.replace('< / e 1 >','e12')
+        sentence = sentence.replace('< e 2 >', 'e21')
+        sentence = sentence.replace('< / e 2 >', 'e22')
+        e1 = sentence.index("e12") - 1
+        e2 = sentence.index("e22") - 1
         data.append([id, sentence, e1, e2, relation])
 
     print(path)
@@ -77,6 +87,7 @@ def load_data_and_labels(path):
 
     pos1, pos2 = get_relative_position(df, FLAGS.max_sentence_length)
 
+    utils.load_relation()
     df['label'] = [utils.class2label[r] for r in df['relation']]
 
     # Text Data
@@ -111,7 +122,8 @@ def get_relative_position(df, max_sentence_length):
     pos2 = []
     for df_idx in range(len(df)):
         sentence = df.iloc[df_idx]['sentence']
-        tokens = nltk.word_tokenize(sentence)
+        # tokens = nltk.word_tokenize(sentence)
+        tokens = sentence.split(" ")
         e1 = df.iloc[df_idx]['e1']
         e2 = df.iloc[df_idx]['e2']
 
